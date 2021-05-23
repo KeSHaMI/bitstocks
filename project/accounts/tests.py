@@ -24,7 +24,7 @@ class DepositTestCase(TestCase):
         self.assertEquals(Transaction.objects.count(), 1)
         # Check balance is now 0.1
         account = Account.objects.get(user=self.user)
-        self.assertEquals(account.balance, 0.1)
+        self.assertAlmostEquals(account.balance, 0.1)
 
     def test_multiple_deposit(self):
         # Get the account and check 0 balance
@@ -42,4 +42,4 @@ class DepositTestCase(TestCase):
         self.assertEquals(Transaction.objects.count(), 3)
         # Check balance is now 0.1
         account = Account.objects.get(user=self.user)
-        self.assertEquals(account.balance, 0.3)
+        self.assertAlmostEquals(account.balance, 0.3)
