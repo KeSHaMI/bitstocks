@@ -3,7 +3,7 @@ FROM alpine:edge
 RUN mkdir -p /usr/src/app 
 
 RUN apk update && \
-    apk add python3 python3-dev vim bash
+    apk add python3 py-pip python3-dev vim bash
 
 COPY requirements.txt /usr/src/requirements.txt
 RUN pip3 install -r /usr/src/requirements.txt
