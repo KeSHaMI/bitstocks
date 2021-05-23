@@ -1,8 +1,10 @@
+from django.db import transaction
 from .models import Account, Transaction
 
 
+@transaction.atomic
 def perform_deposit(user, amount):
-    account = Account.objects.get(user=user)
+    account = Account.objects.select_for_update().get(user=user)
     account.balance += amount
     account.save()
 
@@ -12,7 +14,6 @@ def perform_deposit(user, amount):
     )
 
     return transaction
-
 
 def perform_withdrawal(user, amount):
     pass
