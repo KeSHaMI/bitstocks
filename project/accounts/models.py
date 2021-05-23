@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 class Account(models.Model):
@@ -27,3 +28,5 @@ class Transaction(models.Model):
     )
 
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='transactions')
+    datetime = models.DateTimeField('time', default=timezone.now)
+
