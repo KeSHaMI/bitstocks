@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.test import TestCase
 from django.contrib.auth.models import User
 
@@ -25,7 +27,7 @@ class DepositTestCase(TestCase):
         self.assertEquals(Transaction.objects.count(), 1)
         # Check balance is now 0.1
         account = Account.objects.get(user=self.user)
-        self.assertAlmostEquals(account.balance, 0.1)
+        self.assertEquals(account.balance, Decimal('0.1'))
 
     def test_multiple_deposit(self):
         # Get the account and check 0 balance
@@ -43,13 +45,13 @@ class DepositTestCase(TestCase):
         self.assertEquals(Transaction.objects.count(), 3)
         # Check balance is now 0.1
         account = Account.objects.get(user=self.user)
-        self.assertAlmostEquals(account.balance, 0.3)
+        self.assertEquals(account.balance, Decimal('0.3'))
 
 
 class WithdrawalTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('test@example.com')
-        Account.objects.create(user=self.user, balance=1)
+        Account.objects.create(user=self.user, balance=Decimal('1.0'))
 
     def test_single_withdraw(self):
         # Get the account and check 1 balance
@@ -65,7 +67,7 @@ class WithdrawalTestCase(TestCase):
         self.assertEquals(Transaction.objects.count(), 1)
         # Check balance is now 0.9
         account = Account.objects.get(user=self.user)
-        self.assertAlmostEquals(account.balance, 0.9)
+        self.assertEquals(account.balance, Decimal('0.9'))
 
     def test_multiple_withdraw(self):
         # Get the account and check 1 balance
@@ -83,7 +85,7 @@ class WithdrawalTestCase(TestCase):
         self.assertEquals(Transaction.objects.count(), 3)
         # Check balance is now 0.1
         account = Account.objects.get(user=self.user)
-        self.assertAlmostEquals(account.balance, 0.7)
+        self.assertEquals(account.balance, Decimal('0.7'))
 
     def test_failing_withdraw(self):
         # Get the account and check 1 balance

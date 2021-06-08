@@ -9,7 +9,7 @@ class Account(models.Model):
     """
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='accounts')
-    balance = models.FloatField('balance', default=0)
+    balance = models.DecimalField('balance', default=0, decimal_places=10, max_length=12, max_digits=12)
 
 
 class Transaction(models.Model):
